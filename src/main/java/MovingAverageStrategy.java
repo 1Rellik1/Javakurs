@@ -5,7 +5,7 @@ public class MovingAverageStrategy extends Indicators {
     List<Double> ma;
     Portfolio portfolio;
     public MovingAverageStrategy() {
-        portfolio=new Portfolio(1000,0);
+        portfolio=new Portfolio(100000,0);
     }
 
     public void signals(List<Double>prices) {
@@ -20,7 +20,6 @@ public class MovingAverageStrategy extends Indicators {
                 signals.add(-1);
             } else signals.add(0);
         }
-        portfolio.Calculateprofit(prices,signals);
         portfolio.Calculateprofit(prices,signals);
     }
 }
