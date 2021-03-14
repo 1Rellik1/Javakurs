@@ -2,13 +2,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MovingAverageStrategy extends Indicators {
-    List<Double> ma;
-    Portfolio portfolio;
-    public MovingAverageStrategy() {
-        portfolio=new Portfolio(100000,0);
+    private List<Double> ma;
+    private Portfolio portfolio;
+    public MovingAverageStrategy(double cash,double assets) {
+        portfolio=new Portfolio(cash,assets);
     }
 
-    public void signals(List<Double>prices) {
+    public double signals(List<Double>prices) {
         ma = MovingAverage(prices, 60);
         prices = prices.subList(prices.size() - ma.size(), prices.size());
         List<Integer> signals = new ArrayList<>();
@@ -20,6 +20,13 @@ public class MovingAverageStrategy extends Indicators {
                 signals.add(-1);
             } else signals.add(0);
         }
-        portfolio.Calculateprofit(prices,signals);
+        return portfolio.Calculateprofit(prices,signals);
+    }
+
+    public List<Double> getMa(List<Double>prices) {
+        return MovingAverage(prices, 60);
+    }
+    public List<Double> getPortfoliovalue() {
+        return portfolio.getPortfoliovalue();
     }
 }

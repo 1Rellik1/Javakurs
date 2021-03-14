@@ -35,7 +35,7 @@ public class Portfolio {
     public List<Double> getPortfoliovalue() {
         return portfoliovalue;
     }
-    public void Calculateprofit(List<Double>prices,List<Integer>signals){
+    public double Calculateprofit(List<Double>prices,List<Integer>signals){
         for (int i=0; i< signals.size();i++){
             if (signals.get(i)==1){
                 var amount_buy=Math.floor(cash/prices.get(i));
@@ -50,7 +50,7 @@ public class Portfolio {
             portfoliovalue.add(cash+asset*prices.get(i));
         }
         profit=portfoliovalue.get(portfoliovalue.size()-1);
-        System.out.println(profit);
+        return (profit);
     }
 
 
