@@ -29,6 +29,7 @@ public class HTTP {
     public static List<Double> JparseArray(String input) {
         var Jobj = new JSONObject(input);
         var array = Jobj.getJSONArray("candles").getJSONObject(0).getJSONArray("data");
+        var volumes = Jobj.getJSONArray("volumes").getJSONObject(0).getJSONArray("data");
         List<Double> prices = new ArrayList<>();
         for (int i = 0; i < array.length(); i++) {
             var subarray = array.getJSONArray(i);
@@ -36,11 +37,21 @@ public class HTTP {
             var high = subarray.getDouble(2);
             var low = subarray.getDouble(3);
             var close = subarray.getDouble(4);
-
+            var volume = volumes.getJSONArray(i).getLong(1);
             double price = (open + close + high + low) / 4.0;
             prices.add(price);
         }
         return prices;
+    }
+    public static List<Long> GetVolumes(String input) {
+        var Jobj = new JSONObject(input);
+        var volumes_array = Jobj.getJSONArray("volumes").getJSONObject(0).getJSONArray("data");
+        List<Long> volumes= new ArrayList<>();
+        for (int i = 0; i < volumes_array.length(); i++) {
+            var volume = volumes_array.getJSONArray(i).getLong(1);
+            volumes.add(volume);
+        }
+        return volumes;
     }
 
     public static HashMap JparseCompanies(String input) {

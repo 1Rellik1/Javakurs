@@ -49,7 +49,8 @@ public class Portfolio {
             }
             portfoliovalue.add(cash+asset*prices.get(i));
         }
-        profit=portfoliovalue.get(portfoliovalue.size()-1);
+        profit=portfoliovalue.get(portfoliovalue.size()-1)-portfoliovalue.get(0);
+        System.out.println(profit);
         return (profit);
     }
 
