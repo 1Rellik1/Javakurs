@@ -3,9 +3,10 @@ import java.util.List;
 
 public class RelativeStrengthindex extends Indicators{
     private Portfolio portfolio;
+    private List <Double> rs;
 
-    public RelativeStrengthindex() {
-        this.portfolio = new Portfolio(100000,0);
+    public RelativeStrengthindex(double cash,double assets) {
+        this.portfolio=new Portfolio(cash,assets);
     }
     private double RSI (List<Double> prices_part){
         List <Double> up = new ArrayList<>();
@@ -26,12 +27,22 @@ public class RelativeStrengthindex extends Indicators{
     public double signals(List<Double> prices){
         List <Integer> signals = new ArrayList<>();
         var period = 60;
+        rs= new ArrayList<>();
         for (int i=period-1;i<prices.size();i++) {
+            rs.add(RSI(prices.subList(i - period + 1, i)));
             if (RSI(prices.subList(i - period + 1, i)) >= 80) signals.add(-1);
             else if (RSI(prices.subList(i - period + 1, i)) <= 20) signals.add(1);
             else signals.add(0);
         }
 
         return  portfolio.Calculateprofit(prices,signals);
+    }
+
+    public List<Double> getdataforchart() {
+        return rs;
+    }
+
+    public List<Double> getPortfoliovalue() {
+        return this.portfolio.getPortfoliovalue();
     }
 }

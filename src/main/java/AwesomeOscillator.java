@@ -5,8 +5,8 @@ public class AwesomeOscillator extends Indicators{
     private List<Double> ma;
     private List<Double> ma1;
     private Portfolio portfolio;
-    public AwesomeOscillator() {
-        portfolio=new Portfolio(10000000,0);
+    public AwesomeOscillator(double cash,double assets) {
+        this.portfolio=new Portfolio(cash,assets);
     }
 
     public double signals(List<Double>prices) {
@@ -23,5 +23,15 @@ public class AwesomeOscillator extends Indicators{
             } else signals.add(0);
         }
         return portfolio.Calculateprofit(prices,signals);
+    }
+    public List <List <Double>> getdataforchart(){
+        List <List <Double>> list = new ArrayList<>();
+        list.add(ma);
+        list.add(ma1);
+        return list;
+    }
+
+    public List<Double> getPortfoliovalue() {
+        return this.portfolio.getPortfoliovalue();
     }
 }

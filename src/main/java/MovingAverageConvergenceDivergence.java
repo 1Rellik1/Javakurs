@@ -2,22 +2,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MovingAverageConvergenceDivergence extends Indicators{
-
+    private  List<Double> MACD;
+    private List<Double> signal_line;
     private Portfolio portfolio;
 
-    public MovingAverageConvergenceDivergence() {
-        this.portfolio = new Portfolio(100000,0);
+    public MovingAverageConvergenceDivergence(double cash,double assets) {
+        this.portfolio=new Portfolio(cash,assets);
     }
 
     public double signals(List<Double> prices) {
         List<Double> EMA_26 = ExponentialMovingAverage(prices, 24);
         List<Double> EMA_12 = ExponentialMovingAverage(prices,12);
         EMA_12=EMA_12.subList(EMA_12.size() - EMA_26.size(),EMA_12.size());
-        List<Double> MACD = new ArrayList<>();
+        MACD = new ArrayList<>();
         for (int i=0;i<EMA_12.size();i++){
             MACD.add(EMA_12.get(i)-EMA_26.get(i));
         }
-        List<Double> signal_line = ExponentialMovingAverage(MACD,9);
+        signal_line = ExponentialMovingAverage(MACD,9);
         List<Integer> signals = new ArrayList<>();
         MACD=MACD.subList(MACD.size()-signal_line.size(),MACD.size());
         signals.add(0);
@@ -29,5 +30,15 @@ public class MovingAverageConvergenceDivergence extends Indicators{
             } else signals.add(0);
         }
         return portfolio.Calculateprofit(prices,signals);
+    }
+    public List <List <Double>> getdataforchart(){
+        List <List <Double>> list = new ArrayList<>();
+        list.add(MACD);
+        list.add(signal_line);
+        return list;
+    }
+
+    public List<Double> getPortfoliovalue() {
+        return portfolio.getPortfoliovalue();
     }
 }

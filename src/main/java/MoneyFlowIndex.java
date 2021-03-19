@@ -3,9 +3,10 @@ import java.util.List;
 
 public class MoneyFlowIndex extends Indicators{
     private Portfolio portfolio;
+    private List<Double> mfi;
 
-    public MoneyFlowIndex() {
-        this.portfolio = new Portfolio(100000,0);
+    public MoneyFlowIndex(double cash,double assets) {
+        this.portfolio=new Portfolio(cash,assets);
     }
     private double MFI (List<Double> prices_part,List<Long> volumes_part){
         List <Double> up = new ArrayList<>();
@@ -25,14 +26,23 @@ public class MoneyFlowIndex extends Indicators{
         return 100-(100/(1+RS));
     }
     public double signals(List<Double> prices, List<Long> volumes){
+        mfi=new ArrayList<>();
         List <Integer> signals = new ArrayList<>();
         var period = 60;
         for (int i=period-1;i<prices.size();i++) {
+            mfi.add(MFI(prices.subList(i - period + 1, i),volumes.subList(i - period + 1, i)));
             if (MFI(prices.subList(i - period + 1, i),volumes.subList(i - period + 1, i)) >= 80) signals.add(-1);
             else if (MFI(prices.subList(i - period + 1, i),volumes.subList(i - period + 1, i)) <= 20) signals.add(1);
             else signals.add(0);
         }
-        System.out.println(signals);
         return  portfolio.Calculateprofit(prices,signals);
+    }
+
+    public List<Double> getPortfoliovalue() {
+        return this.portfolio.getPortfoliovalue();
+    }
+
+    public List<Double> getdataforchart() {
+        return mfi;
     }
 }

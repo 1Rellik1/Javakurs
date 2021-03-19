@@ -5,7 +5,7 @@ public class MovingAverageStrategy extends Indicators {
     private List<Double> ma;
     private Portfolio portfolio;
     public MovingAverageStrategy(double cash,double assets) {
-        portfolio=new Portfolio(cash,assets);
+        this.portfolio=new Portfolio(cash,assets);
     }
 
     public double signals(List<Double>prices) {
