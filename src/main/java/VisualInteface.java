@@ -140,7 +140,7 @@ public class VisualInteface extends Application {
                             List<Double> ma = movingAverageStrategy.getMa(HTTP.JparseArray(HTTP.
                                     Get(HTTP.MakeUrl(companies.get(company)))));
                             OurProfit = String.valueOf((movingAverageStrategy.
-                                    signals(prices) - Double.valueOf(cash.getText())));
+                                    signals(prices)));
                             prices = prices.subList(prices.size() - ma.size(), prices.size());
                             flowPaneCenter.getChildren().addAll(MakeLineChart
                                     (prices, ma, "Moving Average strategy"), MakeProfitLineChart
@@ -154,10 +154,12 @@ public class VisualInteface extends Application {
                                     new MovingAverageConvergenceDivergence(Double.parseDouble(cash.getText()),
                                             Double.parseDouble(assets.getText()));
                             OurProfit = String.valueOf((movingAverageConvergenceDivergence.
-                                    signals(prices) - Double.valueOf(cash.getText())));
+                                    signals(prices)));
                             List<List<Double>> macd = movingAverageConvergenceDivergence.getdataforchart();
-                            flowPaneCenter.getChildren().addAll(MakeLineChart(macd.get(0), macd.get(1),"moving Average Convergence/Divergence strategy"), MakeProfitLineChart
-                                    (movingAverageConvergenceDivergence.getPortfoliovalue(),"moving Average Convergence/Divergence strategy"));
+                            flowPaneCenter.getChildren().addAll(MakeLineChart(macd.get(0), macd.get(1),
+                                    "moving Average Convergence/Divergence strategy"), MakeProfitLineChart
+                                    (movingAverageConvergenceDivergence.getPortfoliovalue(),
+                                            "moving Average Convergence/Divergence strategy"));
                             profit.setText(profit.getText()+"moving Average Convergence/Divergence profit: "+OurProfit+'\n');
                             movingAverageConvergenceDivergence=null;
                             System.gc();
@@ -166,9 +168,10 @@ public class VisualInteface extends Application {
                             AwesomeOscillator awesomeOscillator = new AwesomeOscillator(Double.parseDouble
                                     (cash.getText()), Double.parseDouble(assets.getText()));
                             OurProfit = String.valueOf((awesomeOscillator.
-                                    signals(prices) - Double.valueOf(cash.getText())));
+                                    signals(prices)));
                             List<List<Double>> ao = awesomeOscillator.getdataforchart();
-                            flowPaneCenter.getChildren().addAll(MakeLineChart(ao.get(0), ao.get(1),"Awesome Oscillator"), MakeProfitLineChart
+                            flowPaneCenter.getChildren().addAll(MakeLineChart
+                                    (ao.get(0), ao.get(1),"Awesome Oscillator"), MakeProfitLineChart
                                     (awesomeOscillator.getPortfoliovalue(),"Awesome Oscillator"));
                             profit.setText(profit.getText()+"Awesome Oscillator profit: "+OurProfit+'\n');
                             awesomeOscillator=null;
@@ -178,8 +181,7 @@ public class VisualInteface extends Application {
                             MoneyFlowIndex moneyFlowIndex = new MoneyFlowIndex(Double.parseDouble
                                     (cash.getText()), Double.parseDouble(assets.getText()));
                             OurProfit = String.valueOf((moneyFlowIndex.
-                                    signals(prices,HTTP.GetVolumes((HTTP.Get(HTTP.MakeUrl(companies.get(company))))))
-                                    - Double.valueOf(cash.getText())));
+                                    signals(prices,HTTP.GetVolumes((HTTP.Get(HTTP.MakeUrl(companies.get(company))))))));
 
                             List<Double> mf = moneyFlowIndex.getdataforchart();
                             flowPaneCenter.getChildren().addAll(MakeLineChart(mf,"Money Flow Index"), MakeProfitLineChart
@@ -191,8 +193,7 @@ public class VisualInteface extends Application {
                         if (((CheckBox) checkboxes.getChildren().get(4)).isSelected()) {
                             RelativeStrengthindex relativeStrengthindex = new RelativeStrengthindex(Double.parseDouble
                                     (cash.getText()), Double.parseDouble(assets.getText()));
-                            OurProfit = String.valueOf((relativeStrengthindex.
-                                    signals(prices) - Double.valueOf(cash.getText())));
+                            OurProfit = String.valueOf((relativeStrengthindex.signals(prices)));
 
                             List<Double> rs = relativeStrengthindex.getdataforchart();
                             flowPaneCenter.getChildren().addAll(MakeLineChart(rs,"Relative Strength index"), MakeProfitLineChart
