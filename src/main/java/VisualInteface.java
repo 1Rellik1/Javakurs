@@ -1,12 +1,11 @@
 
+import Indicators.*;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Orientation;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -17,7 +16,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -100,7 +99,7 @@ public class VisualInteface extends Application {
     private TextField MakeTextfield(String starting_text){
         TextField textField = new TextField();
         textField.setPrefColumnCount(11);
-        textField.setText(starting_text);
+        textField.setPromptText(starting_text);
         return textField;
     }
     private Button MakeClearButton(){
@@ -109,8 +108,8 @@ public class VisualInteface extends Application {
         btn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                cash.setText("cash");
-                asserts.setText("asserts");
+                cash.setText("");
+                asserts.setText("");
                 flowPaneTop.getChildren().setAll(MakeComboBoxCompanies(),cash,asserts,MakeCheckBoxes(),
                         MakeButton(cash,asserts),MakeClearButton());
                 profit.setText("");
@@ -129,7 +128,7 @@ public class VisualInteface extends Application {
                 try {
                     if (company!=null) {
                         if (profit.getText().length()!=0) {
-                            if (profit.getText().substring(0, 1).equals("К")) {
+                            if ((profit.getText().substring(0, 1).equals("К")) | (profit.getText().substring(0, 1).equals("О"))) {
                                 profit.setText("");
                             }
                         }
@@ -143,8 +142,9 @@ public class VisualInteface extends Application {
                             OurProfit = String.valueOf((movingAverageStrategy.
                                     signals(prices) - Double.valueOf(cash.getText())));
                             prices = prices.subList(prices.size() - ma.size(), prices.size());
-                            flowPaneCenter.getChildren().addAll(MakeLineChart(prices, ma), MakeProfitLineChart
-                                    (movingAverageStrategy.getPortfoliovalue()));
+                            flowPaneCenter.getChildren().addAll(MakeLineChart
+                                    (prices, ma, "Moving Average strategy"), MakeProfitLineChart
+                                    (movingAverageStrategy.getPortfoliovalue(), "Moving Average strategy"));
                             profit.setText(profit.getText()+"Moving Average Strategy profit: "+OurProfit+'\n');
                             movingAverageStrategy = null;
                             System.gc();
@@ -156,8 +156,8 @@ public class VisualInteface extends Application {
                             OurProfit = String.valueOf((movingAverageConvergenceDivergence.
                                     signals(prices) - Double.valueOf(cash.getText())));
                             List<List<Double>> macd = movingAverageConvergenceDivergence.getdataforchart();
-                            flowPaneCenter.getChildren().addAll(MakeLineChart(macd.get(0), macd.get(1)), MakeProfitLineChart
-                                    (movingAverageConvergenceDivergence.getPortfoliovalue()));
+                            flowPaneCenter.getChildren().addAll(MakeLineChart(macd.get(0), macd.get(1),"moving Average Convergence/Divergence strategy"), MakeProfitLineChart
+                                    (movingAverageConvergenceDivergence.getPortfoliovalue(),"moving Average Convergence/Divergence strategy"));
                             profit.setText(profit.getText()+"moving Average Convergence/Divergence profit: "+OurProfit+'\n');
                             movingAverageConvergenceDivergence=null;
                             System.gc();
@@ -168,8 +168,8 @@ public class VisualInteface extends Application {
                             OurProfit = String.valueOf((awesomeOscillator.
                                     signals(prices) - Double.valueOf(cash.getText())));
                             List<List<Double>> ao = awesomeOscillator.getdataforchart();
-                            flowPaneCenter.getChildren().addAll(MakeLineChart(ao.get(0), ao.get(1)), MakeProfitLineChart
-                                    (awesomeOscillator.getPortfoliovalue()));
+                            flowPaneCenter.getChildren().addAll(MakeLineChart(ao.get(0), ao.get(1),"Awesome Oscillator"), MakeProfitLineChart
+                                    (awesomeOscillator.getPortfoliovalue(),"Awesome Oscillator"));
                             profit.setText(profit.getText()+"Awesome Oscillator profit: "+OurProfit+'\n');
                             awesomeOscillator=null;
                             System.gc();
@@ -182,8 +182,8 @@ public class VisualInteface extends Application {
                                     - Double.valueOf(cash.getText())));
 
                             List<Double> mf = moneyFlowIndex.getdataforchart();
-                            flowPaneCenter.getChildren().addAll(MakeLineChart(mf), MakeProfitLineChart
-                                    (moneyFlowIndex.getPortfoliovalue()));
+                            flowPaneCenter.getChildren().addAll(MakeLineChart(mf,"Money Flow Index"), MakeProfitLineChart
+                                    (moneyFlowIndex.getPortfoliovalue(),"Money Flow Index"));
                             profit.setText(profit.getText()+"Money Flow Index profit: "+OurProfit+'\n');
                             moneyFlowIndex=null;
                             System.gc();
@@ -195,8 +195,8 @@ public class VisualInteface extends Application {
                                     signals(prices) - Double.valueOf(cash.getText())));
 
                             List<Double> rs = relativeStrengthindex.getdataforchart();
-                            flowPaneCenter.getChildren().addAll(MakeLineChart(rs), MakeProfitLineChart
-                                    (relativeStrengthindex.getPortfoliovalue()));
+                            flowPaneCenter.getChildren().addAll(MakeLineChart(rs,"Relative Strength index"), MakeProfitLineChart
+                                    (relativeStrengthindex.getPortfoliovalue(),"Relative Strength index"));
                             profit.setText(profit.getText()+"Relative Strength index profit: "+OurProfit+'\n');
                             relativeStrengthindex=null;
                             System.gc();
@@ -207,7 +207,10 @@ public class VisualInteface extends Application {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
+                } catch (NumberFormatException e){
+                    profit.setText("Ошибка ввода");
                 }
+
             }
         });
         return btn;
@@ -235,17 +238,30 @@ public class VisualInteface extends Application {
         flowPaneTop =new FlowPane(10, 10, MakeComboBoxCompanies(),cash,asserts,MakeCheckBoxes(),
                 MakeButton(cash,asserts),MakeClearButton());
     }
-    private LineChart MakeLineChart(List<Double>prices,List<Double>dataforchart){
+    private LineChart MakeLineChart(List<Double>prices,List<Double>dataforchart,String strategy_name){
         NumberAxis x = new NumberAxis();
         NumberAxis y = new NumberAxis();
-
+        y.setAutoRanging(false);
+        if (Collections.min(prices) < Collections.min(dataforchart))
+            y.setLowerBound(Collections.min(prices));
+        else
+            y.setLowerBound(Collections.min(dataforchart));
+        if (Collections.max(prices) >Collections.max(dataforchart))
+            y.setUpperBound(Collections.max(prices));
+        else
+            y.setUpperBound(Collections.max(dataforchart));
         LineChart<Number, Number> numberLineChart = new LineChart<Number, Number>(x,y);
-        numberLineChart.setTitle("Strategy");
+        numberLineChart.setTitle(strategy_name);
         XYChart.Series series1 = new XYChart.Series();
         XYChart.Series series2 = new XYChart.Series();
-        series1.setName("Prices");
-        series2.setName("Moving Average");
-
+        if (strategy_name=="Moving Average strategy") {
+            series1.setName("Prices");
+            series2.setName("Signal line");
+        }
+        else{
+            series1.setName("Signal line 1");
+            series2.setName("Signal line 2");
+        }
         ObservableList<XYChart.Data> datas = FXCollections.observableArrayList();
         ObservableList<XYChart.Data> datas2 = FXCollections.observableArrayList();
         for(int i=0; i<prices.size(); i++){
@@ -256,14 +272,15 @@ public class VisualInteface extends Application {
         numberLineChart.getData().add(series1);
         numberLineChart.getData().add(series2);
         numberLineChart.setCreateSymbols(false);
+
         return numberLineChart;
     }
-    private LineChart MakeLineChart(List<Double>dataforchart){
+    private LineChart MakeLineChart(List<Double>dataforchart, String strategy_name){
         NumberAxis x = new NumberAxis();
         NumberAxis y = new NumberAxis();
 
         LineChart<Number, Number> numberLineChart = new LineChart<Number, Number>(x,y);
-        numberLineChart.setTitle("Strategy");
+        numberLineChart.setTitle(strategy_name);
         XYChart.Series series1 = new XYChart.Series();
         XYChart.Series series2 = new XYChart.Series();
         XYChart.Series series3 = new XYChart.Series();
@@ -293,12 +310,11 @@ public class VisualInteface extends Application {
         numberLineChart.setCreateSymbols(false);
         return numberLineChart;
     }
-    private LineChart MakeProfitLineChart(List<Double>profit){
+    private LineChart MakeProfitLineChart(List<Double>profit,String strategy_name){
         NumberAxis x = new NumberAxis();
         NumberAxis y = new NumberAxis();
-
-        LineChart<Number, Number> numberLineChart = new LineChart<Number, Number>(x,y);
-        numberLineChart.setTitle("Profit");
+        LineChart<Number, Number> numberLineChart = new LineChart(x,y);
+        numberLineChart.setTitle(strategy_name);
         XYChart.Series series1 = new XYChart.Series();
         series1.setName("Profit");
         ObservableList<XYChart.Data> datas = FXCollections.observableArrayList();

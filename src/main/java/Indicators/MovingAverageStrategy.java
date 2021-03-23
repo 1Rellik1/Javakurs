@@ -1,12 +1,17 @@
+package Indicators;
+
+import GeneralClasses.Average;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class MovingAverageStrategy extends Indicators {
+public class MovingAverageStrategy extends Average {
     private List<Double> ma;
-    private Portfolio portfolio;
+
     public MovingAverageStrategy(double cash,double assets) {
-        this.portfolio=new Portfolio(cash,assets);
+        super(cash, assets);
     }
+
 
     public double signals(List<Double>prices) {
         ma = MovingAverage(prices, 60);

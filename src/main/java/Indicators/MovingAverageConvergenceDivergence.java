@@ -1,13 +1,17 @@
+package Indicators;
+
+import GeneralClasses.Ema;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class MovingAverageConvergenceDivergence extends Indicators{
+public class MovingAverageConvergenceDivergence extends Ema {
     private  List<Double> MACD;
     private List<Double> signal_line;
-    private Portfolio portfolio;
 
-    public MovingAverageConvergenceDivergence(double cash,double assets) {
-        this.portfolio=new Portfolio(cash,assets);
+
+    public MovingAverageConvergenceDivergence(double cash,double assets){
+        super(cash,assets);
     }
 
     public double signals(List<Double> prices) {

@@ -1,12 +1,16 @@
+package Indicators;
+
+import GeneralClasses.Average;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class AwesomeOscillator extends Indicators{
+public class AwesomeOscillator extends Average {
     private List<Double> ma;
     private List<Double> ma1;
-    private Portfolio portfolio;
+
     public AwesomeOscillator(double cash,double assets) {
-        this.portfolio=new Portfolio(cash,assets);
+        super(cash,assets);
     }
 
     public double signals(List<Double>prices) {

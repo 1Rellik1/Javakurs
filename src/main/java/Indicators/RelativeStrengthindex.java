@@ -1,12 +1,16 @@
+package Indicators;
+
+import GeneralClasses.Ema;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class RelativeStrengthindex extends Indicators{
-    private Portfolio portfolio;
+public class RelativeStrengthindex extends Ema {
+
     private List <Double> rs;
 
     public RelativeStrengthindex(double cash,double assets) {
-        this.portfolio=new Portfolio(cash,assets);
+        super(cash,assets);
     }
     private double RSI (List<Double> prices_part){
         List <Double> up = new ArrayList<>();
