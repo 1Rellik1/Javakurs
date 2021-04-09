@@ -2,7 +2,18 @@
   <artifact type="jar" name="app">
     <output-path>$PROJECT_DIR$/out/artifacts/app</output-path>
     <root id="archive" name="app.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/META-INF/MANIFEST.MF" />
+      </element>
       <element id="module-output" name="Javakurs" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-controls:11.0.2" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-controls:win:11.0.2" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-graphics:11.0.2" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-graphics:win:11.0.2" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-base:11.0.2" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-base:win:11.0.2" />
+      <element id="library" level="project" name="Maven: org.jsoup:jsoup:1.13.1" />
+      <element id="library" level="project" name="Maven: org.json:json:20210307" />
     </root>
   </artifact>
 </component>

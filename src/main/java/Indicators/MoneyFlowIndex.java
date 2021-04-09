@@ -26,7 +26,6 @@ public class MoneyFlowIndex extends Ema {
         }
         var x=EMA_value(up);
         var y =EMA_value(down);
-
         var RS = (EMA_value(up)/EMA_value(down));
         return 100-(100/(1+RS));
     }
@@ -40,6 +39,7 @@ public class MoneyFlowIndex extends Ema {
             else if (MFI(prices.subList(i - period + 1, i),volumes.subList(i - period + 1, i)) <= 20) signals.add(1);
             else signals.add(0);
         }
+        prices=prices.subList(prices.size()-mfi.size(),prices.size());
         return  portfolio.Calculateprofit(prices,signals);
     }
 

@@ -34,6 +34,7 @@ public class MovingAverageConvergenceDivergence extends Ema {
                 signals.add(-1);
             } else signals.add(0);
         }
+        prices=prices.subList(prices.size()-EMA_12.size(),prices.size());
         return portfolio.Calculateprofit(prices,signals);
     }
     public List <List <Double>> getdataforchart(){

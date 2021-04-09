@@ -39,7 +39,7 @@ public class RelativeStrengthindex extends Ema {
             else if (RSI(prices.subList(i - period + 1, i)) <= 20) signals.add(1);
             else signals.add(0);
         }
-
+        prices=prices.subList(prices.size()-rs.size(),prices.size());
         return  portfolio.Calculateprofit(prices,signals);
     }
 
