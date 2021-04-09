@@ -1,6 +1,7 @@
 package Indicators;
 
 import GeneralClasses.Ema;
+import GeneralClasses.Portfolio;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +11,7 @@ public class MoneyFlowIndex extends Ema {
     private List<Double> mfi;
 
     public MoneyFlowIndex(double cash,double assets) {
-        super(cash,assets);
+        portfolio = new Portfolio(cash,assets);
     }
     private double MFI (List<Double> prices_part,List<Long> volumes_part){
         List <Double> up = new ArrayList<>();

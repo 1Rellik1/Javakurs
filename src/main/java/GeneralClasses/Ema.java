@@ -3,10 +3,9 @@ package GeneralClasses;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Ema extends GeneralFunctionsForIndicators {
-    public Ema(double cash, double assets) {
-        super(cash, assets);
-    }
+public abstract class Ema {
+    protected Portfolio portfolio;
+
 
     protected List<Double> ExponentialMovingAverage(List<Double> prices, int period){
         List <Double> ema = new ArrayList<>();

@@ -1,6 +1,7 @@
 package Indicators;
 
 import GeneralClasses.Ema;
+import GeneralClasses.Portfolio;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +12,7 @@ public class MovingAverageConvergenceDivergence extends Ema {
 
 
     public MovingAverageConvergenceDivergence(double cash,double assets){
-        super(cash,assets);
+        portfolio = new Portfolio(cash,assets);
     }
 
     public double signals(List<Double> prices) {

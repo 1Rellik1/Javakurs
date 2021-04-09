@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>GeneralClasses.Average</OriginalElement>
+  <nodes>
+    <node x="30.0" y="0.0">javafx.application.Application</node>
+    <node x="738.0" y="148.0">Indicators.RelativeStrengthindex</node>
+    <node x="975.0" y="148.0">Indicators.MoneyFlowIndex</node>
+    <node x="623.2857142857142" y="329.42857142857156">GeneralClasses.Average</node>
+    <node x="785.2857142857142" y="477.42857142857156">Indicators.AwesomeOscillator</node>
+    <node x="660.5" y="0.0">GeneralClasses.Ema</node>
+    <node x="439.8571428571429" y="766.5714285714286">GeneralClasses.Portfolio</node>
+    <node x="524.2857142857142" y="488.42857142857156">Indicators.MovingAverageStrategy</node>
+    <node x="810.8571428571429" y="766.5714285714286">HTTP</node>
+    <node x="0.0" y="391.0">VisualInteface</node>
+    <node x="1090.857142857143" y="766.5714285714286">Main</node>
+    <node x="425.0" y="148.0">Indicators.MovingAverageConvergenceDivergence</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="Indicators.AwesomeOscillator" target="GeneralClasses.Average">
+      <point x="0.0" y="-71.5" />
+      <point x="910.7857142857142" y="452.42857142857156" />
+      <point x="855.0357142857142" y="452.42857142857156" />
+      <point x="77.25" y="49.0" />
+    </edge>
+    <edge source="Indicators.MoneyFlowIndex" target="GeneralClasses.Ema">
+      <point x="0.0" y="-71.5" />
+      <point x="1111.5" y="123.0" />
+      <point x="970.5" y="123.0" />
+      <point x="124.0" y="49.0" />
+    </edge>
+    <edge source="Indicators.MovingAverageStrategy" target="GeneralClasses.Average">
+      <point x="0.0" y="-60.5" />
+      <point x="644.7857142857142" y="452.42857142857156" />
+      <point x="700.5357142857142" y="452.42857142857156" />
+      <point x="-77.25" y="49.0" />
+    </edge>
+    <edge source="VisualInteface" target="javafx.application.Application">
+      <point x="0.0" y="-346.0" />
+      <point x="0.0" y="170.5" />
+    </edge>
+    <edge source="Indicators.MovingAverageConvergenceDivergence" target="GeneralClasses.Ema">
+      <point x="0.0" y="-71.5" />
+      <point x="571.5" y="123.0" />
+      <point x="722.5" y="123.0" />
+      <point x="-124.0" y="49.0" />
+    </edge>
+    <edge source="Indicators.RelativeStrengthindex" target="GeneralClasses.Ema">
+      <point x="0.0" y="-71.5" />
+      <point x="0.0" y="49.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.7000000000000001" x="726.9999999999999" y="434.2857142857142" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

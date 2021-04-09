@@ -3,11 +3,8 @@ package GeneralClasses;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Average extends GeneralFunctionsForIndicators {
-    public Average(double cash,double assets) {
-        super(cash,assets);
-    }
-
+public abstract class Average  {
+    protected Portfolio portfolio;
     private double Average(List<Double> part){
         double summ=0;
         for (int i=0;i<part.size();i++){

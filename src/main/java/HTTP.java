@@ -53,6 +53,16 @@ public class HTTP {
         }
         return volumes;
     }
+//    public static List<Long> GetTime(String input) {
+//        var Jobj = new JSONObject(input);
+//        var volumes_array = Jobj.getJSONArray("volumes").getJSONObject(0).getJSONArray("data");
+//        List<Long> volumes= new ArrayList<>();
+//        for (int i = 0; i < volumes_array.length(); i++) {
+//            var volume = volumes_array.getJSONArray(i).getLong(1);
+//            volumes.add(volume);
+//        }
+//        return volumes;
+//    }
 
     public static HashMap JparseCompanies(String input) {
         var jsonObject = new JSONObject(input);

@@ -1,6 +1,7 @@
 package Indicators;
 
 import GeneralClasses.Average;
+import GeneralClasses.Portfolio;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +10,7 @@ public class MovingAverageStrategy extends Average {
     private List<Double> ma;
 
     public MovingAverageStrategy(double cash,double assets) {
-        super(cash, assets);
+        portfolio = new Portfolio(cash,assets);
     }
 
 
